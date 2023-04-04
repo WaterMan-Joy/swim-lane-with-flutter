@@ -53,4 +53,14 @@ class LaneRepository {
       return LaneModel.fromMap(event.data() as Map<String, dynamic>);
     });
   }
+
+  FutureVoid editLane(LaneModel laneModel) async {
+    try {
+      return right(_lanes.doc(laneModel.name).update(laneModel.toMap()));
+    } on FirebaseException catch (e) {
+      throw e.message!;
+    } catch (e) {
+      return left(Failure(e.toString()));
+    }
+  }
 }
