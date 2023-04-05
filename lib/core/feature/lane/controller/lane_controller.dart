@@ -30,8 +30,14 @@ final laneControllerProvider =
   );
 });
 
-final getLaneByNameProvider = StreamProvider.family((ref, String name) {
+final getLaneByNameProvider =
+    StreamProvider.family<LaneModel, String>((ref, String name) {
   return ref.watch(laneControllerProvider.notifier).getLaneByName(name);
+});
+
+final searchLaneProvider =
+    StreamProvider.family<List<LaneModel>, String>((ref, String query) {
+  return ref.watch(laneControllerProvider.notifier).searchLane(query);
 });
 
 class LaneController extends StateNotifier<bool> {
@@ -111,5 +117,9 @@ class LaneController extends StateNotifier<bool> {
     }, (r) {
       return Routemaster.of(context).pop();
     });
+  }
+
+  Stream<List<LaneModel>> searchLane(String query) {
+    return laneRepository.searchLane(query);
   }
 }

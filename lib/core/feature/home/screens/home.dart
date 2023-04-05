@@ -5,6 +5,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_swim_lane/core/common/layouts/default_layout.dart';
 import 'package:flutter_swim_lane/core/feature/auth/controller/auth_controller.dart';
+import 'package:flutter_swim_lane/core/feature/home/delegates/search_lane_delegate.dart';
 import 'package:flutter_swim_lane/models/user_model.dart';
 import 'package:go_router/go_router.dart';
 import 'package:routemaster/routemaster.dart';
@@ -42,7 +43,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         centerTitle: true,
         title: Text('${user?.name ?? '이름 없음'} 님 환영합니다'),
         actions: [
-          IconButton(onPressed: () {}, icon: Icon(Icons.search)),
+          IconButton(
+              onPressed: () => showSearch(
+                  context: context, delegate: SearchLaneDelegate(ref)),
+              icon: Icon(Icons.search)),
           IconButton(
             onPressed: () {},
             icon: CircleAvatar(
