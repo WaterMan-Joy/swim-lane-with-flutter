@@ -71,18 +71,3 @@ class _LoginButton extends ConsumerWidget {
         });
   }
 }
-
-class _RegisterButton extends StatelessWidget {
-  final String text;
-  const _RegisterButton(
-    this.text,
-  );
-
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-      child: Text(text),
-      onPressed: () {},
-    );
-  }
-}

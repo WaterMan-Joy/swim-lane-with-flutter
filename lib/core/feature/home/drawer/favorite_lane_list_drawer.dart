@@ -21,13 +21,12 @@ class FavoriteLaneListDrawer extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final user = ref.watch(userProvider);
-
-    print(user);
+    final user = ref.watch(userProvider)!;
     return Drawer(
       child: SafeArea(
         child: Column(
           children: [
+            Text('계정 주인 - ${user.name}'),
             ListTile(
               leading: Icon(Icons.add),
               title: Text('레인 만들기'),
@@ -37,24 +36,22 @@ class FavoriteLaneListDrawer extends ConsumerWidget {
               title: Text('내 레인'),
             ),
             ref.watch(userLanesProvider).when(
-                  data: (lanes) {
-                    return Expanded(
-                      child: ListView.builder(
-                          itemCount: lanes.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            final lane = lanes[index];
-                            return ListTile(
-                              leading: CircleAvatar(
-                                backgroundImage: NetworkImage(lane.avatar),
-                              ),
-                              title: Text('${lane.name}'),
-                              onTap: () {
-                                navigateToLane(context, lane);
-                              },
-                            );
-                          }),
-                    );
-                  },
+                  data: (lanes) => Expanded(
+                    child: ListView.builder(
+                        itemCount: lanes.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          final lane = lanes[index];
+                          return ListTile(
+                            leading: CircleAvatar(
+                              backgroundImage: NetworkImage(lane.avatar),
+                            ),
+                            title: Text('${lane.name}'),
+                            onTap: () {
+                              navigateToLane(context, lane);
+                            },
+                          );
+                        }),
+                  ),
                   error: (error, stackTrace) {
                     return ErrorText(error: error.toString());
                   },

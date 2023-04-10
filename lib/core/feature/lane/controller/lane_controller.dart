@@ -3,6 +3,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_swim_lane/core/common/constants/failure.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:routemaster/routemaster.dart';
 
 import 'package:flutter_swim_lane/core/common/constants/constants.dart';
@@ -121,5 +123,25 @@ class LaneController extends StateNotifier<bool> {
 
   Stream<List<LaneModel>> searchLane(String query) {
     return laneRepository.searchLane(query);
+  }
+
+  void joinLane(BuildContext context, LaneModel laneModel) async {
+    final user = ref.read(userProvider)!;
+
+    Either<Failure, void> res;
+    if (laneModel.members.contains(user.uid)) {
+      res = await laneRepository.leaveLane(laneModel.name, user.uid);
+    } else {
+      res = await laneRepository.joinLane(laneModel.name, user.uid);
+    }
+    res.fold((l) {
+      return showSnackBar(context, l.message);
+    }, (r) {
+      if (laneModel.members.contains(user.uid)) {
+        showSnackBar(context, '레인을 떠났습니다');
+      } else {
+        showSnackBar(context, '레인에 합류 했습니다');
+      }
+    });
   }
 }

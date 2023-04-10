@@ -63,6 +63,6 @@ class AuthController extends StateNotifier<bool> {
   }
 
   void signOut() async {
-    return authRepository.signOut();
+    authRepository.signOut();
   }
 }

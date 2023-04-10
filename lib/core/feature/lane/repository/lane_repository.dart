@@ -83,4 +83,36 @@ class LaneRepository {
       return lanes;
     });
   }
+
+  FutureVoid joinLane(String laneName, String userId) async {
+    try {
+      return right(
+        _lanes.doc(laneName).update(
+          {
+            'members': FieldValue.arrayUnion([userId])
+          },
+        ),
+      );
+    } on FirebaseException catch (e) {
+      throw e.message!;
+    } catch (e) {
+      return left(Failure(e.toString()));
+    }
+  }
+
+  FutureVoid leaveLane(String laneName, String userId) async {
+    try {
+      return right(
+        _lanes.doc(laneName).update(
+          {
+            'members': FieldValue.arrayRemove([userId])
+          },
+        ),
+      );
+    } on FirebaseException catch (e) {
+      throw e.message!;
+    } catch (e) {
+      return left(Failure(e.toString()));
+    }
+  }
 }

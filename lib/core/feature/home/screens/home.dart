@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_swim_lane/core/common/layouts/default_layout.dart';
 import 'package:flutter_swim_lane/core/feature/auth/controller/auth_controller.dart';
 import 'package:flutter_swim_lane/core/feature/home/delegates/search_lane_delegate.dart';
+import 'package:flutter_swim_lane/core/feature/home/drawer/profile_drawer.dart';
 import 'package:flutter_swim_lane/models/user_model.dart';
 import 'package:go_router/go_router.dart';
 import 'package:routemaster/routemaster.dart';
@@ -22,7 +23,10 @@ class HomeScreen extends ConsumerStatefulWidget {
 class _HomeScreenState extends ConsumerState<HomeScreen> {
   void displayDrawer(BuildContext context) {
     Scaffold.of(context).openDrawer();
-    setState(() {});
+  }
+
+  void displayEndDrawer(BuildContext context) {
+    Scaffold.of(context).openEndDrawer();
   }
 
   void navigateToMyLaneList(context) {
@@ -35,24 +39,26 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final user = ref.watch(userProvider);
+    final user = ref.watch(userProvider)!;
     // print('HOME SCREEN ***** ${user}');
     // print('user : ${user}');
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('${user?.name ?? '이름 없음'} 님 환영합니다'),
+        title: Text('${user.name} 님 환영합니다'),
         actions: [
           IconButton(
               onPressed: () => showSearch(
                   context: context, delegate: SearchLaneDelegate(ref)),
               icon: Icon(Icons.search)),
-          IconButton(
-            onPressed: () {},
-            icon: CircleAvatar(
-              backgroundImage: NetworkImage(user?.profirePic ?? ''),
-            ),
-          ),
+          Builder(builder: (context) {
+            return IconButton(
+              icon: CircleAvatar(
+                backgroundImage: NetworkImage(user.profirePic),
+              ),
+              onPressed: () => displayEndDrawer(context),
+            );
+          }),
         ],
         // leading: ElevatedButton(
         //   onPressed: () => navigateToMyLaneList(context),
@@ -61,8 +67,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         leading: Builder(
           builder: (context) {
             return IconButton(
-              onPressed: () => displayDrawer(context),
               icon: Icon(Icons.list),
+              onPressed: () => displayDrawer(context),
             );
           },
         ),
@@ -75,9 +81,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 'SWIM LANE',
                 style: TextStyle(fontSize: 50),
               ),
-              Text('name: ${user?.name ?? ''}'),
-              Text('name: ${user?.uid ?? ''}'),
-              Text('name: ${user?.profirePic ?? ''}'),
+              Text('name: ${user.name}'),
+              Text('name: ${user.uid}'),
+              Text('name: ${user.profirePic}'),
               ElevatedButton(
                 onPressed: () {
                   print('sign out');
@@ -94,6 +100,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         onPressed: () {},
       ),
       drawer: FavoriteLaneListDrawer(),
+      endDrawer: ProfileDrawer(),
     );
   }
 }

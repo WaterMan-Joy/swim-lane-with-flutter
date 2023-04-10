@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_swim_lane/core/common/widgets/error_text.dart';
 import 'package:flutter_swim_lane/core/common/widgets/loader.dart';
 import 'package:flutter_swim_lane/core/feature/lane/controller/lane_controller.dart';
+import 'package:flutter_swim_lane/models/lane_model.dart';
 import 'package:routemaster/routemaster.dart';
 
 import '../../auth/controller/auth_controller.dart';
@@ -16,6 +17,10 @@ class LaneScreen extends ConsumerWidget {
 
   void navigateToModTools(BuildContext context) {
     Routemaster.of(context).push('/mod-tools/${name}');
+  }
+
+  void joinLane(WidgetRef ref, BuildContext context, LaneModel laneModel) {
+    ref.read(laneControllerProvider.notifier).joinLane(context, laneModel);
   }
 
   @override
@@ -64,7 +69,7 @@ class LaneScreen extends ConsumerWidget {
                           },
                           child: Text('모임 수정'))
                       : ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () => joinLane(ref, context, data),
                           child: Text(data.members.contains(user.uid)
                               ? '가입완료'
                               : '가입하기')),
