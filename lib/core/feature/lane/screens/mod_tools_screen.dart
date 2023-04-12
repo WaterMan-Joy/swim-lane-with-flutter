@@ -17,6 +17,10 @@ class ModToolsScreen extends ConsumerWidget {
     Routemaster.of(context).push('/edit-lane/${name}');
   }
 
+  void navigateToAddMasters(BuildContext context) {
+    Routemaster.of(context).push('/add-masters/${name}');
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(userProvider)!;
@@ -39,7 +43,7 @@ class ModToolsScreen extends ConsumerWidget {
                       leading: Icon(Icons.add_home_outlined),
                       title: Text('마스터 관리자 추가'),
                       subtitle: Text('운영진 관리'),
-                      onTap: () {},
+                      onTap: () => navigateToAddMasters(context),
                     ),
                   ],
                 ),

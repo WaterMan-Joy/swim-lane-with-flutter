@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_swim_lane/core/common/constants/failure.dart';
 import 'package:flutter_swim_lane/core/common/constants/firebase_constants.dart';
@@ -109,6 +110,18 @@ class LaneRepository {
           },
         ),
       );
+    } on FirebaseException catch (e) {
+      throw e.message!;
+    } catch (e) {
+      return left(Failure(e.toString()));
+    }
+  }
+
+  FutureVoid addMasters(String laneName, List<String> uids) async {
+    try {
+      return right(_lanes.doc(laneName).update({
+        'masters': uids,
+      }));
     } on FirebaseException catch (e) {
       throw e.message!;
     } catch (e) {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swim_lane/core/feature/auth/screens/login_screen.dart';
 import 'package:flutter_swim_lane/core/feature/home/screens/home.dart';
+import 'package:flutter_swim_lane/core/feature/lane/screens/add_masters_screen.dart';
 import 'package:flutter_swim_lane/core/feature/lane/screens/create_lane_screen.dart';
 import 'package:flutter_swim_lane/core/feature/lane/screens/edit_lane_screen.dart';
 
@@ -29,6 +30,11 @@ final loggedInRoute = RouteMap(routes: {
       ),
   '/mod-tools/:name': (routeData) => MaterialPage(
         child: ModToolsScreen(
+          name: routeData.pathParameters['name']!,
+        ),
+      ),
+  '/add-masters/:name': (routeData) => MaterialPage(
+        child: AddMastersScreen(
           name: routeData.pathParameters['name']!,
         ),
       ),

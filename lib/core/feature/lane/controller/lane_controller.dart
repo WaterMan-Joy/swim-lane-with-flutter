@@ -144,4 +144,13 @@ class LaneController extends StateNotifier<bool> {
       }
     });
   }
+
+  void addMasters(
+      String laneName, List<String> uids, BuildContext context) async {
+    final res = await laneRepository.addMasters(laneName, uids);
+    res.fold(
+      (l) => showSnackBar(context, l.message),
+      (r) => Routemaster.of(context).pop(),
+    );
+  }
 }
