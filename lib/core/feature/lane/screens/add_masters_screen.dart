@@ -19,6 +19,7 @@ class AddMastersScreen extends ConsumerStatefulWidget {
 
 class _AddMastersScreenState extends ConsumerState<AddMastersScreen> {
   Set<String> uids = {};
+  int ctr = 0;
 
   void addUid(String uid) {
     setState(() {
@@ -57,9 +58,10 @@ class _AddMastersScreenState extends ConsumerState<AddMastersScreen> {
               final member = lane.members[index];
 
               return ref.watch(getUserDataProvider(member)).when(data: (user) {
-                if (lane.masters.contains(member)) {
+                if (lane.masters.contains(member) && ctr == 0) {
                   uids.add(member);
                 }
+                ctr++;
                 return CheckboxListTile(
                   value: uids.contains(user.uid),
                   onChanged: (val) {
