@@ -1,26 +1,25 @@
 import 'dart:convert';
 
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-
 class UserModel {
   final String uid;
   final String name;
-  final String profirePic;
+  final String profilePic;
   UserModel({
     required this.uid,
     required this.name,
-    required this.profirePic,
+    required this.profilePic,
   });
 
   UserModel copyWith({
     String? uid,
     String? name,
-    String? profirePic,
+    String? profilePic,
   }) {
     return UserModel(
       uid: uid ?? this.uid,
       name: name ?? this.name,
-      profirePic: profirePic ?? this.profirePic,
+      profilePic: profilePic ?? this.profilePic,
     );
   }
 
@@ -28,7 +27,7 @@ class UserModel {
     return <String, dynamic>{
       'uid': uid,
       'name': name,
-      'profirePic': profirePic,
+      'profilePic': profilePic,
     };
   }
 
@@ -36,7 +35,7 @@ class UserModel {
     return UserModel(
       uid: map['uid'] as String,
       name: map['name'] as String,
-      profirePic: map['profirePic'] as String,
+      profilePic: map['profilePic'] as String,
     );
   }
 
@@ -46,7 +45,8 @@ class UserModel {
       UserModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
-  String toString() => 'User(uid: $uid, name: $name, profirePic: $profirePic)';
+  String toString() =>
+      'UserModel(uid: $uid, name: $name, profilePic: $profilePic)';
 
   @override
   bool operator ==(covariant UserModel other) {
@@ -54,9 +54,9 @@ class UserModel {
 
     return other.uid == uid &&
         other.name == name &&
-        other.profirePic == profirePic;
+        other.profilePic == profilePic;
   }
 
   @override
-  int get hashCode => uid.hashCode ^ name.hashCode ^ profirePic.hashCode;
+  int get hashCode => uid.hashCode ^ name.hashCode ^ profilePic.hashCode;
 }

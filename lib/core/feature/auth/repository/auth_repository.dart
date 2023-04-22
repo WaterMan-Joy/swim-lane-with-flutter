@@ -51,7 +51,7 @@ class AuthRepository {
         userModel = UserModel(
             uid: userCredential.user!.uid,
             name: userCredential.user!.displayName ?? 'No Name',
-            profirePic:
+            profilePic:
                 userCredential.user!.photoURL ?? Constants.avatarDefault);
         await _users.doc(userCredential.user!.uid).set(userModel.toMap());
         print('auth-repository: ${userCredential.user?.email}');

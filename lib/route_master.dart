@@ -7,6 +7,7 @@ import 'package:flutter_swim_lane/core/feature/lane/screens/edit_lane_screen.dar
 
 import 'package:flutter_swim_lane/core/feature/lane/screens/lane_screen.dart';
 import 'package:flutter_swim_lane/core/feature/lane/screens/mod_tools_screen.dart';
+import 'package:flutter_swim_lane/core/feature/user_profile/screens/edit_user_profile.dart';
 import 'package:flutter_swim_lane/core/feature/user_profile/screens/user_profile_screen.dart';
 import 'package:routemaster/routemaster.dart';
 
@@ -46,6 +47,11 @@ final loggedInRoute = RouteMap(routes: {
       ),
   '/user-profile/:uid': (routeData) => MaterialPage(
         child: UserProfileScreen(
+          uid: routeData.pathParameters['uid']!,
+        ),
+      ),
+  '/edit-user-profile/:uid': (routeData) => MaterialPage(
+        child: EditUserProfileScreen(
           uid: routeData.pathParameters['uid']!,
         ),
       ),

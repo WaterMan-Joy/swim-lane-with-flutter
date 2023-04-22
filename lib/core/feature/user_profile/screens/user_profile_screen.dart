@@ -13,102 +13,99 @@ class UserProfileScreen extends ConsumerWidget {
     required this.uid,
   });
 
+  void navigateToEditUserProfile(BuildContext context) {
+    Routemaster.of(context).push('/edit-user-profile/${uid}');
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(userProvider)!;
 
     return Scaffold(
+        appBar: AppBar(title: Text('프로필 화면')),
         body: ref.watch(getUserDataProvider(uid)).when(data: (data) {
-      return Padding(
-        padding: EdgeInsets.all(20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Image.network(
-              data.profirePic,
-              height: 100,
-            ),
-            Row(
+          return Padding(
+            padding: EdgeInsets.all(20),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Column(
+                Image.network(
+                  data.profilePic,
+                  height: 100,
+                ),
+                Row(
                   children: [
-                    Text(user.name),
-                    Text('${data.name} - 멤버 ${'data.members.length'}명'),
+                    Column(
+                      children: [
+                        Text(user.name),
+                        Text('${data.name}'),
+                      ],
+                    ),
+                    Spacer(),
+                    ElevatedButton(
+                      onPressed: () => navigateToEditUserProfile(context),
+                      child: Text('프로필 수정'),
+                    ),
                   ],
                 ),
-                Spacer(),
-                Icon(Icons.star_border),
-                // data.masters.contains(user.uid)
-                //     ? ElevatedButton(
-                //         onPressed: () {
-                //           return navigateToModTools(context);
-                //         },
-                //         child: Text('모임 수정'))
-                //     : ElevatedButton(
-                //         onPressed: () => joinLane(ref, context, data),
-                //         child: Text(data.members.contains(user.uid)
-                //             ? '가입완료'
-                //             : '가입하기'),
-                //       ),
-              ],
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Card(
-                  child: Column(
-                    children: [
-                      Text('날짜 - 2023-03-23'),
-                      Text('훈련량 2000M - 운동 8개'),
-                      Text('1. Warm Up - 200M 1C'),
-                      Text('2. Warm Up - 200M 1C'),
-                      Text('3. Warm Up - 200M 1C'),
-                    ],
-                  ),
-                ),
-                Card(
-                  child: Column(
-                    children: [
-                      Text('날짜 - 2023-03-23'),
-                      Text('훈련량 2000M - 운동 8개'),
-                      Text('1. Warm Up - 200M 1C'),
-                      Text('2. Warm Up - 200M 1C'),
-                      Text('3. Warm Up - 200M 1C'),
-                    ],
-                  ),
-                ),
-                Card(
-                  child: Column(
-                    children: [
-                      Text('날짜 - 2023-03-23'),
-                      Text('훈련량 2000M - 운동 8개'),
-                      Text('1. Warm Up - 200M 1C'),
-                      Text('2. Warm Up - 200M 1C'),
-                      Text('3. Warm Up - 200M 1C'),
-                    ],
-                  ),
-                ),
-                Card(
-                  child: Column(
-                    children: [
-                      Text('날짜 - 2023-03-23'),
-                      Text('훈련량 2000M - 운동 8개'),
-                      Text('1. Warm Up - 200M 1C'),
-                      Text('2. Warm Up - 200M 1C'),
-                      Text('3. Warm Up - 200M 1C'),
-                    ],
-                  ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text('내 포스트 - 개'),
+                    Card(
+                      child: Column(
+                        children: [
+                          Text('날짜 - 2023-03-23'),
+                          Text('훈련량 2000M - 운동 8개'),
+                          Text('1. Warm Up - 200M 1C'),
+                          Text('2. Warm Up - 200M 1C'),
+                          Text('3. Warm Up - 200M 1C'),
+                        ],
+                      ),
+                    ),
+                    Card(
+                      child: Column(
+                        children: [
+                          Text('날짜 - 2023-03-23'),
+                          Text('훈련량 2000M - 운동 8개'),
+                          Text('1. Warm Up - 200M 1C'),
+                          Text('2. Warm Up - 200M 1C'),
+                          Text('3. Warm Up - 200M 1C'),
+                        ],
+                      ),
+                    ),
+                    Card(
+                      child: Column(
+                        children: [
+                          Text('날짜 - 2023-03-23'),
+                          Text('훈련량 2000M - 운동 8개'),
+                          Text('1. Warm Up - 200M 1C'),
+                          Text('2. Warm Up - 200M 1C'),
+                          Text('3. Warm Up - 200M 1C'),
+                        ],
+                      ),
+                    ),
+                    Card(
+                      child: Column(
+                        children: [
+                          Text('날짜 - 2023-03-23'),
+                          Text('훈련량 2000M - 운동 8개'),
+                          Text('1. Warm Up - 200M 1C'),
+                          Text('2. Warm Up - 200M 1C'),
+                          Text('3. Warm Up - 200M 1C'),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
-          ],
-        ),
-      );
-    }, error: (error, stackTrace) {
-      return ErrorText(error: error.toString());
-    }, loading: () {
-      return Loader();
-    }));
+          );
+        }, error: (error, stackTrace) {
+          return ErrorText(error: error.toString());
+        }, loading: () {
+          return Loader();
+        }));
   }
 }

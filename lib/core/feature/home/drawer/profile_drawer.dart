@@ -23,14 +23,14 @@ class ProfileDrawer extends ConsumerWidget {
         child: Column(
           children: [
             CircleAvatar(
-              backgroundImage: NetworkImage(user.profirePic),
+              backgroundImage: NetworkImage(user.profilePic),
               radius: 70,
             ),
             SizedBox(height: 10),
             Text('${user.name}'),
             SizedBox(height: 30),
             ListTile(
-              title: Text('프로필 수정'),
+              title: Text('프로필'),
               leading: Icon(Icons.person),
               onTap: () => navigateToUserProfile(context, user.uid),
             ),

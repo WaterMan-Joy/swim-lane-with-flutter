@@ -54,7 +54,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           Builder(builder: (context) {
             return IconButton(
               icon: CircleAvatar(
-                backgroundImage: NetworkImage(user.profirePic),
+                backgroundImage: NetworkImage(user.profilePic),
               ),
               onPressed: () => displayEndDrawer(context),
             );
@@ -83,7 +83,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               ),
               Text('name: ${user.name}'),
               Text('name: ${user.uid}'),
-              Text('name: ${user.profirePic}'),
+              Text('name: ${user.profilePic}'),
               ElevatedButton(
                 onPressed: () {
                   print('sign out');
