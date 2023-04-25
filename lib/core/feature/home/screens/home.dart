@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_swim_lane/core/common/constants/constants.dart';
 import 'package:flutter_swim_lane/core/common/layouts/default_layout.dart';
 import 'package:flutter_swim_lane/core/feature/auth/controller/auth_controller.dart';
 import 'package:flutter_swim_lane/core/feature/home/delegates/search_lane_delegate.dart';
@@ -21,6 +23,8 @@ class HomeScreen extends ConsumerStatefulWidget {
 }
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
+  int _page = 0;
+
   void displayDrawer(BuildContext context) {
     Scaffold.of(context).openDrawer();
   }
@@ -33,8 +37,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     Routemaster.of(context).push('/my-lane-list-screen');
   }
 
-  void signOut() {
-    ref.read(authControllerProvider.notifier).signOut();
+  void onPageChanged(int page) {
+    setState(() {
+      _page = page;
+    });
   }
 
   @override
@@ -73,34 +79,22 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           },
         ),
       ),
-      body: DefaultLayout(
-        child: Center(
-          child: Column(
-            children: [
-              Text(
-                'SWIM LANE',
-                style: TextStyle(fontSize: 50),
-              ),
-              Text('name: ${user.name}'),
-              Text('name: ${user.uid}'),
-              Text('name: ${user.profilePic}'),
-              ElevatedButton(
-                onPressed: () {
-                  print('sign out');
-                  return signOut();
-                },
-                child: Text('로그아웃'),
-              ),
-            ],
-          ),
-        ),
-      ),
+      body: Constants.tabWidgets[_page],
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.access_time_sharp),
         onPressed: () {},
       ),
       drawer: FavoriteLaneListDrawer(),
       endDrawer: ProfileDrawer(),
+      bottomNavigationBar: CupertinoTabBar(
+        items: [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: "홈"),
+          BottomNavigationBarItem(icon: Icon(Icons.star), label: "즐겨찾기"),
+          BottomNavigationBarItem(icon: Icon(Icons.post_add), label: "훈련 작성"),
+        ],
+        onTap: onPageChanged,
+        currentIndex: _page,
+      ),
     );
   }
 }
