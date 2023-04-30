@@ -24,6 +24,13 @@ final postControllerProvider =
       ref: ref);
 });
 
+final userPostsProvider =
+    StreamProvider.family<List<PostModel>, List<LaneModel>>(
+        (ref, List<LaneModel> lanes) {
+  final postController = ref.watch(postControllerProvider.notifier);
+  return postController.fetchUserPosts(lanes);
+});
+
 class PostController extends StateNotifier<bool> {
   final PostRepository postRepository;
   final StorageRepository storageRepository;
@@ -78,5 +85,12 @@ class PostController extends StateNotifier<bool> {
       });
       state = false;
     });
+  }
+
+  Stream<List<PostModel>> fetchUserPosts(List<LaneModel> lanes) {
+    if (lanes.isNotEmpty) {
+      return postRepository.fetchUserPosts(lanes);
+    }
+    return Stream.value([]);
   }
 }

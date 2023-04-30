@@ -9,6 +9,8 @@ import 'package:flutter_swim_lane/core/common/providers/firebase_providers.dart'
 import 'package:flutter_swim_lane/models/post_model.dart';
 import 'package:fpdart/fpdart.dart';
 
+import '../../../../models/lane_model.dart';
+
 final postRepositoryProvider = Provider((ref) {
   return PostRepository(
       firebaseFirestore: ref.watch(firebaseFirestoreProvider));
@@ -31,5 +33,15 @@ class PostRepository {
     } catch (e) {
       return left(Failure(e.toString()));
     }
+  }
+
+  Stream<List<PostModel>> fetchUserPosts(List<LaneModel> lanes) {
+    return _posts
+        .where('selectedLane', whereIn: lanes.map((e) => e.name).toList())
+        .orderBy('createAt', descending: true)
+        .snapshots()
+        .map((event) => event.docs
+            .map((e) => PostModel.fromMap(e.data() as Map<String, dynamic>))
+            .toList());
   }
 }
