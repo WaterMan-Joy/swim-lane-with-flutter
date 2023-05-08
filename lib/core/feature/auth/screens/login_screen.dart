@@ -11,6 +11,10 @@ import 'package:flutter_swim_lane/core/feature/auth/controller/auth_controller.d
 class LoginScreen extends ConsumerWidget {
   const LoginScreen({super.key});
 
+  // void signInWithGoogle(BuildContext context, WidgetRef ref) {
+  //   ref.read(authControllerProvider.notifier).signInWithGoogle(context);
+  // }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isLoading = ref.watch(authControllerProvider);
@@ -65,9 +69,6 @@ class _LoginButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return ElevatedButton(
-        child: Text(text),
-        onPressed: () {
-          return signInWithGoogle(context, ref);
-        });
+        child: Text(text), onPressed: () => signInWithGoogle(context, ref));
   }
 }

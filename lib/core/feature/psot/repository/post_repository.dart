@@ -44,4 +44,62 @@ class PostRepository {
             .map((e) => PostModel.fromMap(e.data() as Map<String, dynamic>))
             .toList());
   }
+
+  FutureVoid deletePost(PostModel post) async {
+    try {
+      return right(_posts.doc(post.id).delete());
+    } on FirebaseException catch (e) {
+      throw e.message!;
+    } catch (e) {
+      return left(Failure(e.toString()));
+    }
+  }
+
+  void upvote(PostModel post, String userId) async {
+    if (post.downvotes.contains(userId)) {
+      _posts.doc(post.id).update(
+        {
+          'downvotes': FieldValue.arrayRemove([userId]),
+        },
+      );
+    }
+
+    if (post.upvotes.contains(userId)) {
+      _posts.doc(post.id).update(
+        {
+          'upvotes': FieldValue.arrayRemove([userId]),
+        },
+      );
+    } else {
+      _posts.doc(post.id).update(
+        {
+          'upvotes': FieldValue.arrayUnion([userId]),
+        },
+      );
+    }
+  }
+
+  void downvote(PostModel post, String userId) async {
+    if (post.upvotes.contains(userId)) {
+      _posts.doc(post.id).update(
+        {
+          'upvotes': FieldValue.arrayRemove([userId]),
+        },
+      );
+    }
+
+    if (post.downvotes.contains(userId)) {
+      _posts.doc(post.id).update(
+        {
+          'downvotes': FieldValue.arrayRemove([userId]),
+        },
+      );
+    } else {
+      _posts.doc(post.id).update(
+        {
+          'downvotes': FieldValue.arrayUnion([userId]),
+        },
+      );
+    }
+  }
 }

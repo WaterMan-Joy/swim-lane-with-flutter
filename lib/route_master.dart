@@ -19,10 +19,7 @@ final loggedOutRoute = RouteMap(routes: {
 });
 
 final loggedInRoute = RouteMap(routes: {
-  '/': (_) => MaterialPage(
-        child: HomeScreen(),
-        // paths: ['/feed', '/settings'],
-      ),
+  '/': (_) => MaterialPage(child: HomeScreen()),
 
   '/create-lane': (_) => MaterialPage(child: CreateLaneScreen()),
   '/my-lane-list-screen': (_) => MaterialPage(child: MyLaneListScreen()),

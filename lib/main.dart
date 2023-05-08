@@ -43,15 +43,15 @@ class _MyAppState extends ConsumerState<MyApp> {
   @override
   Widget build(BuildContext context) {
     return ref.watch(authStateChangeProvider).when(
-        data: (data) {
+        data: (user) {
           return MaterialApp.router(
             debugShowCheckedModeBanner: false,
             title: 'Swim Lain',
             theme: ThemeData(useMaterial3: true),
             routerDelegate: RoutemasterDelegate(
               routesBuilder: (context) {
-                if (data != null) {
-                  getData(ref, data);
+                if (user != null) {
+                  getData(ref, user);
                   if (userModel != null) {
                     return loggedInRoute;
                   }

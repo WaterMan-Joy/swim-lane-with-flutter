@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_swim_lane/core/common/providers/firebase_providers.dart';
 
 import 'package:flutter_swim_lane/core/common/providers/storage_repository_provider.dart';
 import 'package:flutter_swim_lane/core/feature/auth/controller/auth_controller.dart';
@@ -92,5 +91,21 @@ class PostController extends StateNotifier<bool> {
       return postRepository.fetchUserPosts(lanes);
     }
     return Stream.value([]);
+  }
+
+  void deletePost(PostModel post, BuildContext context) async {
+    final res = await postRepository.deletePost(post);
+    return res.fold((l) => null, (r) => showSnackBar(context, "삭제가 완료되었습니다"));
+    // res.fold((l) => null, (r) => showSnackBar(context, 'Post Deleted successfully!'));
+  }
+
+  void upvote(PostModel post) async {
+    final uid = ref.read(userProvider)!.uid;
+    postRepository.upvote(post, uid);
+  }
+
+  void downvote(PostModel post) async {
+    final uid = ref.read(userProvider)!.uid;
+    postRepository.downvote(post, uid);
   }
 }

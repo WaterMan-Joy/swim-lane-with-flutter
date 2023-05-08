@@ -89,7 +89,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       bottomNavigationBar: CupertinoTabBar(
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "홈"),
-          BottomNavigationBarItem(icon: Icon(Icons.star), label: "즐겨찾기"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.arrow_circle_up), label: "UP"),
           BottomNavigationBarItem(icon: Icon(Icons.post_add), label: "훈련 작성"),
         ],
         onTap: onPageChanged,
