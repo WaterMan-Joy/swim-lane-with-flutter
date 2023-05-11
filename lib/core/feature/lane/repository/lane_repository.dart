@@ -128,4 +128,18 @@ class LaneRepository {
       return left(Failure(e.toString()));
     }
   }
+
+  FutureVoid addManagers(String laneName, List<String> uids) async {
+    try {
+      return right(
+        _lanes.doc(laneName).update(
+          {"managers": uids},
+        ),
+      );
+    } on FirebaseException catch (e) {
+      throw e.message!;
+    } catch (e) {
+      return left(Failure(e.toString()));
+    }
+  }
 }

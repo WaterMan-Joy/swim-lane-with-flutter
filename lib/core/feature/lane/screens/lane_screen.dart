@@ -77,52 +77,7 @@ class LaneScreen extends ConsumerWidget {
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Card(
-                    child: Column(
-                      children: [
-                        Text('날짜 - 2023-03-23'),
-                        Text('훈련량 2000M - 운동 8개'),
-                        Text('1. Warm Up - 200M 1C'),
-                        Text('2. Warm Up - 200M 1C'),
-                        Text('3. Warm Up - 200M 1C'),
-                      ],
-                    ),
-                  ),
-                  Card(
-                    child: Column(
-                      children: [
-                        Text('날짜 - 2023-03-23'),
-                        Text('훈련량 2000M - 운동 8개'),
-                        Text('1. Warm Up - 200M 1C'),
-                        Text('2. Warm Up - 200M 1C'),
-                        Text('3. Warm Up - 200M 1C'),
-                      ],
-                    ),
-                  ),
-                  Card(
-                    child: Column(
-                      children: [
-                        Text('날짜 - 2023-03-23'),
-                        Text('훈련량 2000M - 운동 8개'),
-                        Text('1. Warm Up - 200M 1C'),
-                        Text('2. Warm Up - 200M 1C'),
-                        Text('3. Warm Up - 200M 1C'),
-                      ],
-                    ),
-                  ),
-                  Card(
-                    child: Column(
-                      children: [
-                        Text('날짜 - 2023-03-23'),
-                        Text('훈련량 2000M - 운동 8개'),
-                        Text('1. Warm Up - 200M 1C'),
-                        Text('2. Warm Up - 200M 1C'),
-                        Text('3. Warm Up - 200M 1C'),
-                      ],
-                    ),
-                  ),
-                ],
+                children: [],
               ),
             ],
           ),

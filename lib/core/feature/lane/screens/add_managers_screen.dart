@@ -33,8 +33,8 @@ class _AddMastersScreenState extends ConsumerState<AddMastersScreen> {
     });
   }
 
-  void saveMasters() {
-    ref.read(laneControllerProvider.notifier).addMasters(
+  void saveManagers() {
+    ref.read(laneControllerProvider.notifier).addManagers(
           widget.name,
           uids.toList(),
           context,
@@ -46,9 +46,9 @@ class _AddMastersScreenState extends ConsumerState<AddMastersScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('관리자 추가'),
+        title: Text('운영진 추가'),
         actions: [
-          IconButton(onPressed: saveMasters, icon: Icon(Icons.done)),
+          IconButton(onPressed: saveManagers, icon: Icon(Icons.done)),
         ],
       ),
       body: ref.watch(getLaneByNameProvider(widget.name)).when(data: (lane) {
@@ -58,10 +58,11 @@ class _AddMastersScreenState extends ConsumerState<AddMastersScreen> {
               final member = lane.members[index];
 
               return ref.watch(getUserDataProvider(member)).when(data: (user) {
-                if (lane.masters.contains(member) && ctr == 0) {
+                if (lane.managers.contains(member) && ctr == 0) {
                   uids.add(member);
+                  ctr++;
                 }
-                ctr++;
+                print(ctr);
                 return CheckboxListTile(
                   value: uids.contains(user.uid),
                   onChanged: (val) {

@@ -62,6 +62,7 @@ class LaneController extends StateNotifier<bool> {
       avatar: Constants.avatarDefault,
       members: [uid],
       masters: [uid],
+      managers: [uid],
     );
     // laneRepository.createLane(laneModel);
     final res = await laneRepository.createLane(laneModel);
@@ -148,6 +149,15 @@ class LaneController extends StateNotifier<bool> {
   void addMasters(
       String laneName, List<String> uids, BuildContext context) async {
     final res = await laneRepository.addMasters(laneName, uids);
+    res.fold(
+      (l) => showSnackBar(context, l.message),
+      (r) => Routemaster.of(context).pop(),
+    );
+  }
+
+  void addManagers(
+      String laneName, List<String> uids, BuildContext context) async {
+    final res = await laneRepository.addManagers(laneName, uids);
     res.fold(
       (l) => showSnackBar(context, l.message),
       (r) => Routemaster.of(context).pop(),

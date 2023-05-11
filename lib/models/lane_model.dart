@@ -10,6 +10,7 @@ class LaneModel {
   final String avatar;
   final List<String> members;
   final List<String> masters;
+  final List<String> managers;
   LaneModel({
     required this.id,
     required this.name,
@@ -17,6 +18,7 @@ class LaneModel {
     required this.avatar,
     required this.members,
     required this.masters,
+    required this.managers,
   });
 
   LaneModel copyWith({
@@ -26,6 +28,7 @@ class LaneModel {
     String? avatar,
     List<String>? members,
     List<String>? masters,
+    List<String>? managers,
   }) {
     return LaneModel(
       id: id ?? this.id,
@@ -34,6 +37,7 @@ class LaneModel {
       avatar: avatar ?? this.avatar,
       members: members ?? this.members,
       masters: masters ?? this.masters,
+      managers: managers ?? this.managers,
     );
   }
 
@@ -45,6 +49,7 @@ class LaneModel {
       'avatar': avatar,
       'members': members,
       'masters': masters,
+      'managers': managers,
     };
   }
 
@@ -56,6 +61,7 @@ class LaneModel {
       avatar: map['avatar'] as String,
       members: List<String>.from(map['members']),
       masters: List<String>.from(map['masters']),
+      managers: List<String>.from(map['managers']),
     );
   }
 
@@ -66,7 +72,7 @@ class LaneModel {
 
   @override
   String toString() {
-    return 'Lane(id: $id, name: $name, banner: $banner, avatar: $avatar, members: $members, masters: $masters)';
+    return 'Lane(id: $id, name: $name, banner: $banner, avatar: $avatar, members: $members, masters: $masters, managers: $managers)';
   }
 
   @override
@@ -78,7 +84,8 @@ class LaneModel {
         other.banner == banner &&
         other.avatar == avatar &&
         listEquals(other.members, members) &&
-        listEquals(other.masters, masters);
+        listEquals(other.masters, masters) &&
+        listEquals(other.managers, managers);
   }
 
   @override
@@ -88,6 +95,7 @@ class LaneModel {
         banner.hashCode ^
         avatar.hashCode ^
         members.hashCode ^
-        masters.hashCode;
+        masters.hashCode ^
+        managers.hashCode;
   }
 }

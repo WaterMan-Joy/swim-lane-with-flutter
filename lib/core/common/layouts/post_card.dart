@@ -8,6 +8,7 @@ import 'package:flutter_swim_lane/core/feature/lane/controller/lane_controller.d
 import 'package:flutter_swim_lane/core/feature/psot/controller/post_controller.dart';
 import 'package:flutter_swim_lane/models/lane_model.dart';
 import 'package:flutter_swim_lane/models/post_model.dart';
+import 'package:routemaster/routemaster.dart';
 
 class PostCard extends ConsumerWidget {
   final PostModel post;
@@ -29,6 +30,14 @@ class PostCard extends ConsumerWidget {
     ref.read(postControllerProvider.notifier).downvote(post);
   }
 
+  void navigateToUser(BuildContext context) {
+    Routemaster.of(context).push('/user-profile/${post.uid}');
+  }
+
+  void navigateToLane(BuildContext context) {
+    Routemaster.of(context).push('/${post.selectedLane}');
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(userProvider)!;
@@ -42,42 +51,70 @@ class PostCard extends ConsumerWidget {
             children: [
               Row(
                 children: [
-                  CircleAvatar(
-                    backgroundImage: NetworkImage(lane.avatar),
+                  GestureDetector(
+                    onTap: () => navigateToLane(context),
+                    child: Row(
+                      children: [
+                        CircleAvatar(
+                          backgroundImage: NetworkImage(lane.avatar),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text("${post.selectedLane}"),
+                      ],
+                    ),
                   ),
                   SizedBox(
                     width: 10,
                   ),
-                  Text("${post.selectedLane}"),
                   ref.watch(getLaneByNameProvider(post.selectedLane)).when(
-                      data: (data) {
-                        if (data.masters.contains(user.uid)) {
-                          return IconButton(
-                            onPressed: () {},
-                            icon: const Icon(
-                              Icons.admin_panel_settings,
-                              color: Colors.red,
-                            ),
-                          );
-                        }
-                        return SizedBox();
-                      },
-                      error: (error, stackTrace) {
-                        return ErrorText(error: error.toString());
-                      },
-                      loading: () => Loader()),
-                  post.uid.contains(user.uid)
-                      ? Icon(
-                          Icons.flag_circle,
-                          color: Colors.orange,
-                        )
-                      : Icon(
-                          Icons.flag_circle,
-                          color: Colors.grey,
-                        ),
+                        data: (data) {
+                          if (data.masters.contains(user.uid)) {
+                            return Row(
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.all(10),
+                                  child: Text(
+                                    "마스터",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            );
+                          }
+                          return SizedBox();
+                        },
+                        error: (error, stackTrace) {
+                          return ErrorText(error: error.toString());
+                        },
+                        loading: () => Loader(),
+                      ),
+                  Padding(
+                    padding: EdgeInsets.all(10),
+                    child: post.uid.contains(user.uid)
+                        ? Text(
+                            "내글",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          )
+                        : Text(
+                            "남의글",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                  ),
                   Spacer(),
-                  Text(
-                      "생성일 : ${post.createAt.month}월 ${post.createAt.hour}시 ${post.createAt.minute}분"),
+                  Column(
+                    children: [
+                      Text(
+                          "생성일 : ${post.createAt.month}월 ${post.createAt.hour}시 ${post.createAt.minute}분"),
+                      ElevatedButton(
+                        onPressed: () => navigateToUser(context),
+                        child: Text("작성자 : ${user.name}"),
+                      )
+                    ],
+                  ),
                 ],
               ),
               SizedBox(
@@ -103,7 +140,7 @@ class PostCard extends ConsumerWidget {
               Row(
                 children: [
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () => navigateToLane(context),
                     child: Text("${post.selectedLane}"),
                   ),
                   SizedBox(

@@ -41,9 +41,15 @@ class ModToolsScreen extends ConsumerWidget {
                     ),
                     ListTile(
                       leading: Icon(Icons.add_home_outlined),
-                      title: Text('마스터 관리자 추가'),
+                      title: Text('운영진 관리자 추가'),
                       subtitle: Text('운영진 관리'),
                       onTap: () => navigateToAddMasters(context),
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.flag_circle),
+                      title: Text('마스터 관리자 변경'),
+                      subtitle: Text('마스터 관리자'),
+                      onTap: () {},
                     ),
                   ],
                 ),
